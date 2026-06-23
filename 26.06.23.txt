@@ -1,0 +1,104 @@
+<html>
+	<head>
+		<title> AI 1기 권구봉	</title>
+			var name = prompt("성명?");				//null 없다. // NaN not a numb
+			document.write("성명 : "+name+"<br>");	//prompt 질문을 띄워주고 질문에 대한 답변까지 읽어오는 기능
+			var kor = prompt("국어 점수?");			//prompt 의 답변은 항상 '문자열' 로 취급함.
+			document.write("국어 점수 : "+kor+"<br>");
+			var eng = prompt("영어 점수?");
+			document.write("영어 점수 : "+eng+"<br>");
+			var total = Number(kor)+Number(eng);		// Number(a)  >> 문자열 a를 정수 a로 바꿔줌.		 
+			document.write("총점 : "+total+"<br>")
+		<script>
+		
+		
+		</script>
+	</head>
+	
+	<body>
+	</body>
+	</html>
+	-------------------------------------
+	<script>
+	var name = prompt("성명?");
+	var kor = prompt("국어점수?");
+	var eng = prompt("영어점수?");
+	var mat = prompt("수학점수?");
+	var total = Number(kor)+Number(eng)+Number(mat);
+	var ave = total /3 ;
+	
+	document.write(name+"님의 총점은 "+total+"점<br>");
+	document.write(name+"님의 평균은 "+ave+"점<br>");
+	</script>
+	권구봉님의 총점은 a점
+	권구봉님의 평균은 b점 
+	
+	
+	------------------------------------
+	권구봉 님의 총점은 a점
+	권구봉 님의 평균은 b점 입니다.
+	
+	<script>
+	var name = prompt("성명?");
+	var kor = prompt("국어점수는?");  
+	var eng = prompt("영어 점수는?"); 
+	var mat = prompt("수학 점수는?");  
+	var total = Number(kor)+Number(eng)+Number(mat);
+	var ave = (total/3) - ((total/3)%1);
+	document.write(name+" 님의 총점은 "+total+"점<br>");
+	document.write(name+" 님의 평균은 "+ave+"점");
+	</script>
+	
+	---------------------------------------------
+	점수가 80점 이상이면 합격, 미만이면 불합격을 if else 구문으로.
+	<script>
+	var total = prompt("점수는?");
+	if (Number(total)>=80) {
+		document.write("1.합격");
+	}
+	else{
+		document.write("2.불합격");
+	}
+	</script>
+	
+	------------------------------------------------
+	90점 이상 a 80점 이상 b 70점 이상 c , 미만은 f 처리하세요
+	
+	<script>									//else 는 if 문과 짝으로 참이면 
+		var point = prompt("점수는?");			//if 문 안의 조건은 참,거짓이 판명가능한 조건만 가능하다. 
+		if (Number(point)>=90) {					//참이면 {} 실행, 거짓이면 작동하지않는다.
+			document.write("a");				// if(ave=90) 불가능,  if(ave==90) 가능.
+		}
+		else {
+			if (Number(point)>=80) {
+				document.write("b");
+			}
+			else{
+				if (Number(point)>=70) {
+					document.write("c");
+				}
+				else{
+					document.write("F");
+				}
+			}
+			}
+		
+		}
+	
+	
+	
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
