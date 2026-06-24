@@ -1,0 +1,38 @@
+<html>
+<head><title>권구봉</title>
+/* 기본급여 150
+총무 10
+영업 12
+생산 15
+군필 10
+나이 30 이상은 +10
+출력:권구봉님 총급여  */
+
+	var mon = 150;
+	var job = prompt("총무 영업 생산 중 택1");
+	var age = prompt("나이쓰셈");
+	var army = prompt("병역 y/n");
+	var name = prompt("이름은?");
+	if (army = "y"){
+		mon +=10;
+	}
+	if (age>="30"){
+		mon +=10;
+	}
+	if (job == "총무"){
+		mon +=10;
+	}
+	else if (job == "영업"){
+		mon +=12;
+	}
+	else if (job == "생산"){
+		mon +=15;
+	}
+	
+	document.write(name+"님의 월급은 "+mon+"입니다.");
+</script>
+
+</head>
+<body>
+</body>
+</html>

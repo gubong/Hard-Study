@@ -1,0 +1,26 @@
+<html>
+<head><title>권구봉</title>
+//용돈 구하기. 기본용돈10만원 나이가 스무살 이상이면 5만원을 더 주고, 
+// 20살 이하면 기본용돈만.  출력:150000원
+// 나이>30이상이면 5만원
+// 나이>20이상이면 2만원추가
+<script>
+	var age = prompt("나이는?");
+	var result = 100000;
+	if (Number(age)>=30){
+		result +=100000;
+	}
+	else if (Number(age)>=20){
+		result +=70000;
+	}
+
+document.write("용돈 " + result +"원");
+</script>
+
+</head>
+<body>
+</body>
+</html>
+
+
+

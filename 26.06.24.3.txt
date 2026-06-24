@@ -1,0 +1,24 @@
+<html>
+<head><title>권구봉</title>
+/* 생활비
+	기본 50만
+	기혼 30만
+	자녀 자녀수*10만
+	출력 : 생활비: 얼마
+*/
+	var wed = prompt("기혼? 미혼?")
+	var mon = 50;
+	
+	if (wed == "기혼"){
+		mon +=30;
+		var child = prompt(자녀의 수는?);
+		var childcost = Number(child)*10
+		mon += childcost;
+	}
+document.write("생활비는 " +mon+"원 입니다.");
+
+</script>
+</head>
+<body>
+</body>
+</html>
