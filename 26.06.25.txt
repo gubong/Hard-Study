@@ -1,0 +1,105 @@
+<html>
+<head><title>AI 1기 권구봉</title>
+
+	<script>		// ~~~.length 변수의 '문자열' 의 길이. 순서로 짜르는법.	
+	var str = "가나다라마바사아자차카타파하";
+	var len = str.length;
+	document.write("1. 문자열 길이 : "+len+"<br>");
+	
+	var result = str.substring(2,4);
+	document.write("2. result : "+result+"<br>");
+	
+	result = str.substring(5);
+	document.write("3. result : "+result+"<br>");
+	
+	str = "가나다라마바사아자카타파하";   //자르는법
+	if (str.length>10){
+		str = str.substring(0,10)+"...";
+		document.write("4. str : "+str+"<br>");
+	}
+	
+	str = "가나다라마바사아자차카타파하";
+		var position = str.indexOf("가");
+		document.write("5. position : "+position+"<br>");
+	//붙어있는문자열의 시작되는 포지션찾기 
+	//찾는문자열이없으면 결과는 -1로 고정.
+	</script>
+
+</head>
+<body>
+</body>
+</html>
+---------------------------------------------------
+<script>
+	for(var k=0; k>5; k++){
+		document.write(k+"가나다<br>");	
+	}
+
+//반복문 구성: 초기값? 조건? 증감? ex)1부터, 1씩증가, <=10
+//k 0부터 5보다 작을동안 명령 실행후 1씩증가/ 초기값으로, 조건에 맞으면 {}
+// 명령문을 실행. {} 후에 증강. 정확히는 } 에서 증강.
+
+
+// 1~10 더하기,  짝수함, 홀수함.
+// for 문과 변수정의의 위치에 주의.
+
+	var total = 0;
+	var jjack = 0;
+	var hol = 0;
+	for (var k=1; k<=10; k++){
+		total +=k;
+		if(k%2==0){
+			jjack +=k;
+		}
+		else{
+			hol +=k;
+		}
+	}
+		document.write("total : "+total+"<br>");
+		document.write("total : "+jjack+"<br>");
+		document.write("total : "+hol+"<br>");
+</script>
+
+
+---------------------------------------------------
+
+<script>
+// 몇개의수? "3"번. 3번 질문해서 답한 수의 총합.
+// 홀수는 몇개였고 짝수는 몇개였니? - 출력
+
+	var a = Number(prompt("몇 개의 수를 더할거니?"));
+	var total = 0;
+	var jjack = 0;
+	var hol = 0;
+	
+	for(k=1; k<=a; k++){
+		var b = Number(prompt("무슨 수를 더할래?"));
+			total += b;
+		if(b%2==0){
+			jjack+=1;
+		}
+		else{
+			hol+=1;
+		}
+	}
+document.write(total+"<br>");
+document.write("짝수는"+jjack+"홀수는"+hol);
+
+</script>
+-----------------------------------------
+
+<scipt>
+	result = 0;
+	for (var k=1; k<=5; k++){
+		var val=Number(prompt(k+"번째 수 입력?"));
+		document.write(k+"번째 : "+val+"<br>");
+		if (val>5;){
+		result +=1
+		}
+	}	
+document.write("5초과 수 개수: "+result+"<br>");
+
+</script>
+
+
+

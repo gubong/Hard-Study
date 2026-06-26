@@ -1,0 +1,160 @@
+<html>
+<head><title></title>
+	<script>
+		//5번 질문. 80점이상 합격. 미만 불합격
+	var ok = 0;
+	var no = 0;
+	
+	for(var k=1;k<=5;k++){
+		var point = Number(prompt("몇점 입니까?"));
+		if (point>=80){
+			ok++;
+		}
+		else{
+			no++;
+		}
+	}
+	document.write("합격"+ok+"명<br>불합격"+no+"명");
+</script>
+
+<head>
+<body>
+</body>
+</html>
+---------------------------------------
+//몇과목?
+//성적 입력하시오
+//총점, 평균 출력
+<script>
+	var sub = Number(prompt("몇 과목입니까?"));
+	var total = 0;
+	for (var k=1; k<=sub; k++){
+		var point = Number(prompt("몇 점입니까?"));
+		total += point;
+	}
+	var ave = total / sub;
+	document.write(total+"<br>"+ave)
+	
+</script>
+
+----------------------------------------------------
+//99단 몇단?
+<script>
+	var dan = Number(prompt("몇 단?"));
+	
+	for (k=1; k<=9; k++){
+		document.write(dan+"*"+k+"="+(dan*k)+"<br>")
+	}
+</script>
+
+
+--------------------------------------------------
+//몇 과목입니까?
+// 과목 수 만큼 점수 입력. > 입력한 것 출력, 와일문 다 끝나면 총점출력.
+<script>
+	var sub = Number(prompt(몇 과목?));
+	var total = 0;
+	
+	var k =1;
+	while(k<=sub){
+		var point = Number(prompt(몇 점?));
+		document.write(point+"<br>");
+		total += point;
+		k++	
+	} 
+	
+	var ave = total/sub;
+	document.write(total+"<br>");
+	document.write(ave);
+	
+</script>
+
+--------------------------------------------
+//이중for문 99단
+
+	for (var k=1; k<=9; k++){
+		for(var j=1; j<=9; j++){
+			document.write(k+"*"+j+"="+k*j+<br>");
+		}
+		document.write("<br>");	
+	}
+-----------------------------------------------
+//홍길동, 차길동, 박길동, 김길동, 표길동
+	var abc =[];
+	abc[0] = "홍길동";
+	abc[1] = "차길동";
+	abc[2] = "박길동";
+	abc[3] = "김길동";
+	abc[4] = "표길동";
+	
+	for (var k=0; k<abc.length; k++){
+	document.write(abc[k]+"<br>");
+	}
+
+	var point = [];
+	point[0] =50;
+	point[1]=60;
+	point[2]=70;
+	document.write(point.length+"<br>");
+	pointtotal = 0;
+	for (var a=0; a<point.length; a++){
+	document.write(point[a]+"<br>");	
+	pointtotal +=point[a];
+	}
+	document.write(pointtotal+"<br>");	
+
+---------------------------------------------------
+//몇번질문할까? 입력한 횟수만큼 배열안에 집어넣으세요.
+// 전부 넣었으면 배열 내용을 전부 출력하세요.
+	var point = [];
+	var count = Number(prompt("몇번 질문할래요?"));
+	for (k=0; k<count; k++){
+		point[k]= prompt("무슨 수?");
+	}
+	
+	for (var k=0; k<point.length; k++){
+		document.write(point[k]+"<br>");
+	}
+--------------------------------------------
+//몇명 물어볼래? 1~x번까지 이름 배열에 저장, 후 배열 내용 출력.
+var count = Number(prompt("몇 명?"));
+var info=[];
+
+for (k=0;k<count; k++){
+	var info[k] = prompt(k+1+"번째 이름은?");		
+}
+
+for (k=0; k<info.length; k++){
+	document.write(k+1+"번째 이름은 : "+info[k]+"<br>");	
+}
+------------------------------------------------
+// 홍길동, 차길동, 박길동, 이명박, 표길동
+var count = Number(prompt("몇 명?"));
+var info=[];
+
+for (k=0;k<count; k++){
+	var info[k] = prompt(k+1+"번째 이름은?");		
+}
+var search = prompt("어떤 이름 검색할래?");    //박 검색
+for (k=0; k<info.length; k++){
+	if (info[k].indexOf(search) != -1){
+		document.write(k+1+"번째 :"+info[k]+"<br>");	
+	}
+}
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
