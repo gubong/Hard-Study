@@ -1,0 +1,87 @@
+	<html>
+	<head><title>array</title>
+	<script>		//array복습
+		var point = [5,6,7,8];
+		total = 0;
+		
+		for(var k=0; k<point.length; k++){
+			total += point[k]
+		}
+		document.write(total+"<br>");
+		document.write("==============================");
+		
+		var info = ["홍길동","차길동","박길동","이명박","표길동"];
+		for (var k=0; k<info.length; k++){
+			document.write(info[k]+"<br>");
+		}
+	</script>
+	</head>
+	<body>
+	</body>
+	</html>
+//--------------------------------배열 속에 배열
+		<script>
+		var a1 = ["홍길동","5","6","7"];
+		var a2 = ["차길동","8","9","10"];
+		
+		var info = [];
+		info[0] = a1;
+		info[1] = a2;
+		info[2] = a1;
+		for (var k=0; k<info.length; k++){
+			for (var j=0; j<info[k].length; k++){
+				document.write(info[k][j]+" ");
+			}
+			document.write("<br>");
+		}
+		
+		var len = info.lengtr;
+		document.write(len);
+		</script>
+//-------------------------------------------------------
+		//2차원 배열 연습2
+		
+		var score = [
+		["권","1","24","3","4"],
+		["김","11","12","533","4"],
+		["창","14","42","32","44"],
+		["행","12","62","31","64"]
+		];
+		var total =0;
+		
+		for(var k=0; k<score.length; k++){
+			for (var j=0; j<score[k].length; j++){
+				document.write(score[k][j]+" ");
+				if (j ==0){
+				}
+				else{
+					total += Number(score[k][j]);
+				}
+			}
+		document.write(total+"<br>");
+		total = 0;
+		}
+		
+//----------------------------------------------
+//함수, function
+//함수를 만들 때, get total 을 합친다고 가정하면 두 번째 단어는 대문자로 시작하기로 관례적으로 약속
+//함수생성은 실행명령의 선후와는 관계가없다.
+//return = 함수의 결과를 돌려준다. 정수10, 문자열 등 다 가능.
+	<script>
+		getTotal();
+		document.write(getTotal(5,6)+"<br>");	//5와6 함수에 넣어줌. 매개변수
+		
+		function getTotal(a,b){
+			var total = a + b;
+			return total;
+		}
+		result = getTotal(100,200);
+		document.write(result);	
+	</script>
+
+
+
+
+
+
+
