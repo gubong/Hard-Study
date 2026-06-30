@@ -1,0 +1,36 @@
+<script>
+	//함수
+	//함수는 명령어로 함수를 불러올 때만 실행되고, return 값을 입력시킨 후엔 전부 종료된다.
+	var kor = Number(prompt("국어?"));
+	var eng = Number(prompt("영어?"));
+	var mat = Number(prompt("수학?"));
+	
+	var total = getTotal(kor,eng,mat);
+	var ave = getAve(total,3);
+	var result = getResult(ave);  //합격 불합격 출력
+	
+	function getTotal(a,b,c){
+		var total = a+b+c;
+		return = total;
+	}
+	functio getAve(a,b){
+		var ave = a/b;
+		return = ave;
+	}
+	function getResult(a){
+		if(a>=80){
+			result = "합격";
+		}
+		else{
+			result = "불합격";
+		}
+	}
+	document.write(total+"<br>");
+	document.write(ave+"<br>");
+	document.write(result+"<br>");
+</script>
+-----------------------------------------
+
+
+
+
