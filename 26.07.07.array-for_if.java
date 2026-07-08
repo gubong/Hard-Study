@@ -10,7 +10,6 @@ public class Java_06 {
 		 * 과목별로 점수를 입력받음. 배열. 
 		 */
 		
-		
 		Scanner sc = new Scanner(System.in);
 		System.out.println("몇과목?");
 		int count = sc.nextInt();
