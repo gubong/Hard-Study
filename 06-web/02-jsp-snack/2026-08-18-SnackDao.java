@@ -1,5 +1,6 @@
 package dao;
 
+import java.beans.DesignMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,81 @@ public class SnackDao {
 	Connection con =null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
+	
+	//스태틱변수
+	String area = "서울";
+	
+	private String name="홍길동";
+	//스태틱메소드안에서 사용하는 멤버변수는 스태틱이어야한다.   //스태틱변수는 페이지구분이아닌, 서버가 중지될때까지 유효하다.
+	//public static String getName(){
+	//	return name;
+	//}
+	
+	
+	
+	
+	//삭제 코드받아와서삭제,
+	public int snackDelete(String pcode) {
+		int result=0;
+		String sql ="delete from snack_권구봉\r\n"
+				+ "where pcode = '"+pcode+"'";
+		
+		try {
+			con=DBConnection.getConnection();
+			ps=con.prepareStatement(sql);
+			result = ps.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	//등록  dto받아와서 업데이트시키고 결과인트로 리턴
+	public int snackUpdate(SnackDto dto) {
+		int result = 0;
+		String sql = "update snack_권구봉\r\n"
+				+ "set pname='"+dto.getPname()+"',\r\n"
+				+ "    company='"+dto.getCompany()+"',\r\n"
+				+ "    price="+dto.getPrice()+",\r\n"
+				+ "    makedate='"+dto.getMakedate()+"'\r\n"
+				+ "where pcode = '"+dto.getPcode()+"'";
+		
+		try {
+			con=DBConnection.getConnection();
+			ps=con.prepareStatement(sql);
+			result = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	//4600>>4,600
+	public String getWonComma(int money) {
+		DecimalFormat df = new DecimalFormat("#,###");
+		return df.format(money);
+	}
+	
 	
 	
 	
