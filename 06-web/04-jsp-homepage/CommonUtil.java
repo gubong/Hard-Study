@@ -87,7 +87,7 @@ public class CommonUtil {
 			}
 			curpage++;
 		}
-		//뒤에 페이지가 더 있는 경우
+		//뒤에 페이지가 더 있는 경우에 사용. 
 		if(total_page > endpage){
 			curpage = endpage+1;
 			strList = strList + "<a href=javascript:goPage('"+curpage+"') ><i class='fa fa-angle-double-right'></i></a>";
