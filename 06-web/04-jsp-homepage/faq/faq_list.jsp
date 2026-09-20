@@ -1,9 +1,31 @@
+<%@page import="dao.*,dto.*"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file= "../common_header.jsp"%>
 
+	<%
+		FaqDao dao = FaqDao.getDao();
+		request.setCharacterEncoding("utf-8");
+		String select = request.getParameter("t_select");
+		if(select==null) select = "question";
+		String search = request.getParameter("t_search");
+		if(search==null) search = "";
+		List<FaqDto> arr = dao.getList(select,search);
+	%>
 
 
+
+	<script type="text/javascript">
+	 function goList(){
+		 faq.method = "post";
+		 faq.action = "faq_list.jsp";
+		 faq.submit;
+	 }
+	
+	</script>
+	
+	
 	
 	<!-- sub contents -->
 	<div class="sub_title">
@@ -43,20 +65,20 @@
 			<p>총게시글<span>120</span>건</p>
 		</div>
 		<div class="search_group">
-			<form name="myform" action="">
-				<select name="sel" class="select">
-					<option value="1">제목</option>
-					<option value="2">내용</option>
+			<form name="faq">
+				<select name="t_select" class="select">
+					<option value="question" <%if(select.equals("question")) out.print("selected"); %>>제목</option>
+					<option value="answer" <%if(select.equals("answer")) out.print("selected"); %>>내용</option>
 				</select>
-				<input type="text" name="search" class="search_word">
-				<button class="btn_search"><i class="fa fa-search"></i><span class="sr-only">검색버튼</span></button>
+				<input type="text" name="t_search" value="<%=search%>" class="search_word">
+				<button class="btn_search" onclick="goList()"><i class="fa fa-search"></i><span class="sr-only">검색버튼</span></button>
 			</form>
 		</div>
 	  </div> <!-- search end -->
 	  <div class="bord_list">
 		
 		<div class="faq-group">
-
+			<%for(FaqDto dto : arr){ %>
 				<div class="accordion">
 					<table class="table">
 						<colgroup>
@@ -67,41 +89,17 @@
 							<col width="10%">
 						</colgroup>
 						<tr>
-							<td>F001</td>
-							<td>질문을 할때에는 이헐게~~</td>
-							<td>관리자</td>
-							<td>2020-09-01</td>
-							<td>35</td>
+							<td><%=dto.getNo()%></td>
+							<td><%=dto.getQuestion()%></td>
+							<td><%=dto.getReg_id()%></td>
+							<td><%=dto.getReg_date()%></td>
 						</tr>	
 					</table>
 				</div>
 				<div class="panel">
-					<textarea>asdfasdfasd asdfasdf asd</textarea>
+					<textarea><%=dto.getAnswer()%></textarea>
 				</div>
-
-				<div class="accordion">
-					<table class="table">
-						<colgroup>
-							<col width="5%">
-							<col width="*">
-							<col width="15%">
-							<col width="10%">
-							<col width="10%">
-						</colgroup>
-						<tr>
-							<td>F222</td>
-							<td>222222~</td>
-							<td>관리자</td>
-							<td>2020-09-01</td>
-							<td>35</td>
-						</tr>	
-					</table>
-				</div>
-				<div class="panel">
-					<textarea>asdfasdfasd asdfasdf asd</textarea>
-				</div>
-				
-		</div>
+			<%} %>
 
 		<script>
 			$(function() {
