@@ -1,5 +1,4 @@
-<%@page import="dao.*,dto.*"%>
-<%@page import="java.util.List"%>
+<%@page import="dao.*,dto.*,common.*,java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file= "../common_header.jsp"%>
@@ -11,7 +10,31 @@
 		if(select==null) select = "question";
 		String search = request.getParameter("t_search");
 		if(search==null) search = "";
-		List<FaqDto> arr = dao.getList(select,search);
+//		List<FaqDto> arr = dao.getList(select,search);
+		
+		/* paging 설정 start*/
+		int totalCount = dao.getTotalCount(select,search);
+		int list_setup_count = 4;  //한페이지당 출력 행수 
+		int pageNumber_count = 3;  //한페이지당 출력 페이지 갯수
+		String nowPage = request.getParameter("t_clickPage");
+
+		int current_page = 0; // 현재페이지 번호
+		int total_page = 0;    // 전체 페이지 수
+		
+		if(nowPage == null || nowPage.equals("")) current_page = 1; 
+		else current_page = Integer.parseInt(nowPage);
+		
+		total_page = totalCount / list_setup_count;  // 몫 : 2
+		int rest = 	totalCount % list_setup_count;   // 나머지:1
+		if(rest !=0) total_page = total_page + 1;     // 3
+		
+		int start = (current_page -1) * list_setup_count + 1;
+		int end   = current_page * list_setup_count;
+		/* paging 설정 end*/	
+		int order = totalCount - ( start - 1 ); // 
+
+		List<FaqDto> arr = dao.getNoticeList(select,search,start,end);
+		
 	%>
 
 
@@ -20,9 +43,16 @@
 	 function goList(){
 		 faq.method = "post";
 		 faq.action = "faq_list.jsp";
-		 faq.submit;
+		 faq.submit();
 	 }
 	
+	 function goPage(no){
+		 faq.t_clickPage.value = no;
+		 faq.method = "post";
+		 faq.action = "faq_list.jsp";
+		 faq.submit();
+	 }
+	 
 	</script>
 	
 	
@@ -66,6 +96,7 @@
 		</div>
 		<div class="search_group">
 			<form name="faq">
+			<input type="hidden" name="t_clickPage">
 				<select name="t_select" class="select">
 					<option value="question" <%if(select.equals("question")) out.print("selected"); %>>제목</option>
 					<option value="answer" <%if(select.equals("answer")) out.print("selected"); %>>내용</option>
@@ -97,7 +128,14 @@
 					</table>
 				</div>
 				<div class="panel">
-					<textarea><%=dto.getAnswer()%></textarea>
+					<textarea readonly ><%=dto.getAnswer()%></textarea>
+			<% if(sessionLevel.equals("top")){ %>
+				<div class="paging">
+					<a href="faq_write.jsp" class="btn_write">글쓰기</a>
+					<a href="faq_write.jsp" class="btn_write">글쓰기</a>
+				</div>
+			<%} %>
+								
 				</div>
 			<%} %>
 
@@ -126,7 +164,7 @@
 		</script>
 
 		<div class="paging">
-			<a href=""><i class="fa  fa-angle-double-left"></i></a>
+<!--			<a href=""><i class="fa  fa-angle-double-left"></i></a>
 			<a href=""><i class="fa fa-angle-left"></i></a>
 			<a href="" class="active">1</a>
 			<a href="">2</a>
@@ -135,6 +173,13 @@
 			<a href="">5</a>
 			<a href=""><i class="fa fa-angle-right"></i></a>
 			<a href=""><i class="fa  fa-angle-double-right"></i></a>
+-->			
+			<%
+				String pageDisplay= CommonUtil.getPageSetting(current_page, total_page, pageNumber_count);
+				out.print(pageDisplay);
+			%>		
+
+
 			<% if(sessionLevel.equals("top")){ %>
 				<a href="faq_write.jsp" class="btn_write">글쓰기</a>
 			<%} %>
