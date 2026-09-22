@@ -59,10 +59,13 @@
 		 update.submit();
 	 }
 	 
-	 function goDelete(){
-		 update.method="post";
-		 update.action="db_faq_delete.jsp"
-		 update.submit();
+	 function goDelete(no){
+		 if(confirm("삭제하시겠습니까?")){
+			 update.t_no.value=no;
+			 update.method="post";
+			 update.action="db_faq_delete.jsp"
+			 update.submit();
+		 }
 	 }
 	 
 	</script>
@@ -120,13 +123,13 @@
 	  </div> <!-- search end -->
 	  <div class="bord_list">
 		<form name="update">
+			<input type="hidden" name="t_no" value="">
+			<input type="hidden" name="t_question" value="">
+			<input type="hidden" name="t_answer" value="">	
 		<div class="faq-group">
 			<%for(FaqDto dto : arr){ %>
 				<div class="accordion">
-				
-					<input type="hidden" name="t_no" value="<%=dto.getNo()%>">
-					<input type="hidden" name="t_question" value="<%=dto.getQuestion()%>">
-					<input type="hidden" name="t_answer" value="<%=dto.getAnswer()%>">
+					<% String dtoNo = dto.getNo();%>
 						<table class="table">
 							<colgroup>
 								<col width="5%">
@@ -143,17 +146,17 @@
 							</tr>	
 						</table>
 				</div>
-				<div class="panel">
+		<div class="panel">
 					<textarea readonly ><%=dto.getAnswer()%></textarea>
 					<%order --; %>
 				<% if(sessionLevel.equals("top")){ %>
 					<div class="paging">
-						<a href="db_faq_delete.jsp?t_no=<%=dto.getNo()%>" class="btn_write">삭제</a>
+						<a href="javascript:goDelete('<%=dtoNo%>')" class="btn_write">삭제</a>
 						<a href="faq_update.jsp?t_no=<%=dto.getNo()%>" class="btn_write">수정</a>
 					</div>
 				<%} %>
 									
-					</div>
+	</div>
 				<%} %>
 				</form>
 
@@ -227,7 +230,6 @@
 
  </body>
 </html>
-
 
 
 
