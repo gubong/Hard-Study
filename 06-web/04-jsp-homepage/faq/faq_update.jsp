@@ -81,11 +81,11 @@
 				<tbody>
 					<tr class="first">
 						<th>질문</th>
-						<td colspan="3"><input type="text" name="t_question" value="<%=question%>"></td>
+						<td colspan="3"><input type="text" name="t_question" value="<%=question%>" maxlength="66"></td>
 					</tr>
 					<tr>
 						<th>답변</th>
-						<td colspan="3"><textarea name="t_answer"><%=answer%></textarea></td>
+						<td colspan="3"><textarea name="t_answer" maxlength="666"><%=answer%></textarea></td>
 					</tr>
 					<tr>
 						<th>등록자</th>
@@ -97,7 +97,7 @@
 			</table>
 			<div class="btn_wrap">
 				<input type="button" value="저장" class="btn_ok" onclick="goSave()">&nbsp;&nbsp;
-				<input type="reset" value="다시쓰기" class="btn_reset">&nbsp;&nbsp;
+				<input type="button" value="다시쓰기" class="btn_reset" onclick="location.href='faq_update.jsp?t_no=<%=no%>'">&nbsp;&nbsp;
 				<input type="button" value="목록" class="btn_list" onClick="location.href='faq_list.jsp';">
 			</div>
 		</form>
@@ -128,7 +128,6 @@
 <%
 	}
 %>
-
 
 
 
