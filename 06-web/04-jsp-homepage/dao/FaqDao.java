@@ -21,6 +21,80 @@ import java.util.ArrayList;
 		LoggableStatement ps = null;
 		ResultSet rs = null;
 		
+		//번호로 몇개줏어오기
+		public FaqDto getNoList(String no) {
+			FaqDto dto = null;
+			String sql = "select question,answer\r\n"
+					+ "from jsl_권구봉_faq\r\n"
+					+ "where no = ?";
+			try {
+				con = DBConnection.getConnection();
+				LoggableStatement ps = new LoggableStatement(con, sql);
+				ps.setString(1, no);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					String question = rs.getString("question");
+					String answer = rs.getString("answer");
+					dto = new FaqDto(question, answer);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("FAQ목록오류");
+			} finally {
+				DBConnection.closeDB(con, ps, rs);
+			}
+			return dto;
+	 	}
+		
+		
+		
+		//삭제
+		public int getDelete(String no) {
+			int result = 0;
+			String sql = "delete from jsl_권구봉_faq\r\n"
+					+ "where no = ?";
+			try {
+				con =DBConnection.getConnection();
+				LoggableStatement ps = new LoggableStatement(con, sql);
+				ps.setString(1, no);
+				result = ps.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("getnotice오류 : ");
+			}finally {
+				DBConnection.closeDB(con, ps, rs);
+			}
+			return result;
+		}
+		
+		
+		//수정
+		public int getUpdate(FaqDto dto) {
+			int result = 0;
+			String sql = "update jsl_권구봉_faq\r\n"
+					+ "set question = ?,\r\n"
+					+ "    answer= ?,\r\n"
+					+ "    reg_date = ?\r\n"
+					+ "where no = ?";
+			try {
+				con =DBConnection.getConnection();
+				LoggableStatement ps = new LoggableStatement(con, sql);
+				ps.setString(1, dto.getQuestion());
+				ps.setString(2, dto.getAnswer());
+				ps.setString(3, dto.getReg_date());
+				ps.setString(4, dto.getNo());
+				result = ps.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("getnotice오류 : ");
+			}finally {
+				DBConnection.closeDB(con, ps, rs);
+			}
+			return result;
+		}
+		
+		
+		
 		
 		// 출력할화면말불러오기
 		public List<FaqDto> getNoticeList(String select,String search,int start,int end){
@@ -173,4 +247,3 @@ import java.util.ArrayList;
 		
 		
 	}
-
