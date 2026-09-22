@@ -53,6 +53,18 @@
 		 faq.submit();
 	 }
 	 
+	 function goUpdate(){
+		 update.method="post";
+		 update.action="faq_update.jsp";
+		 update.submit();
+	 }
+	 
+	 function goDelete(){
+		 update.method="post";
+		 update.action="db_faq_delete.jsp"
+		 update.submit();
+	 }
+	 
 	</script>
 	
 	
@@ -64,7 +76,7 @@
 		  <div class="location">
 			<ul>
 				<li class="btn_home">
-					<a href="index.html"><i class="fa fa-home btn_plus"></i></a>
+					<a href="faq_list.jsp"><i class="fa fa-home btn_plus"></i></a>
 				</li>
 				<li class="dropdown">
 					<a href="">커뮤니티<i class="fa fa-plus btn_plus"></i></a>
@@ -92,7 +104,7 @@
 	<div class="container">
 	  <div class="search_wrap">
 		<div class="record_group">
-			<p>총게시글<span>120</span>건</p>
+			<p>총게시글<span><%=totalCount%></span>건</p>
 		</div>
 		<div class="search_group">
 			<form name="faq">
@@ -107,37 +119,43 @@
 		</div>
 	  </div> <!-- search end -->
 	  <div class="bord_list">
-		
+		<form name="update">
 		<div class="faq-group">
 			<%for(FaqDto dto : arr){ %>
 				<div class="accordion">
-					<table class="table">
-						<colgroup>
-							<col width="5%">
-							<col width="*">
-							<col width="15%">
-							<col width="10%">
-							<col width="10%">
-						</colgroup>
-						<tr>
-							<td><%=dto.getNo()%></td>
-							<td><%=dto.getQuestion()%></td>
-							<td><%=dto.getReg_id()%></td>
-							<td><%=dto.getReg_date()%></td>
-						</tr>	
-					</table>
+				
+					<input type="hidden" name="t_no" value="<%=dto.getNo()%>">
+					<input type="hidden" name="t_question" value="<%=dto.getQuestion()%>">
+					<input type="hidden" name="t_answer" value="<%=dto.getAnswer()%>">
+						<table class="table">
+							<colgroup>
+								<col width="5%">
+								<col width="*">
+								<col width="15%">
+								<col width="10%">
+								<col width="10%">
+							</colgroup>
+							<tr>
+								<td><%=order%></td>
+								<td><%=dto.getQuestion()%></td>
+								<td><%=dto.getReg_id()%></td>
+								<td><%=dto.getReg_date()%></td>
+							</tr>	
+						</table>
 				</div>
 				<div class="panel">
 					<textarea readonly ><%=dto.getAnswer()%></textarea>
-			<% if(sessionLevel.equals("top")){ %>
-				<div class="paging">
-					<a href="faq_write.jsp" class="btn_write">글쓰기</a>
-					<a href="faq_write.jsp" class="btn_write">글쓰기</a>
-				</div>
-			<%} %>
-								
-				</div>
-			<%} %>
+					<%order --; %>
+				<% if(sessionLevel.equals("top")){ %>
+					<div class="paging">
+						<a href="db_faq_delete.jsp?t_no=<%=dto.getNo()%>" class="btn_write">삭제</a>
+						<a href="faq_update.jsp?t_no=<%=dto.getNo()%>" class="btn_write">수정</a>
+					</div>
+				<%} %>
+									
+					</div>
+				<%} %>
+				</form>
 
 		<script>
 			$(function() {
@@ -209,7 +227,6 @@
 
  </body>
 </html>
-
 
 
 
