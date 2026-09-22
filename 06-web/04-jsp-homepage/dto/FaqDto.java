@@ -4,6 +4,11 @@ public class FaqDto {
 	String no,question,answer,reg_id,reg_date;
 
 	
+	public FaqDto(String question, String answer) {
+		this.question = question;
+		this.answer = answer;
+	}
+
 	public FaqDto(String no, String question, String answer, String reg_id, String reg_date) {
 		this.no = no;
 		this.question = question;
