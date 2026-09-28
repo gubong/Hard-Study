@@ -18,7 +18,7 @@
 		String select = "id";
 		String id = request.getParameter("t_no");
 		MemberDao dao = MemberDao.getDao();
-		List<MemberDto> arr = dao.getAdmList(select, id);	
+		List<MemberDto> arr = dao.getAdmList(select, id);
 		MemberDto dto = arr.get(0);
 %>
 
