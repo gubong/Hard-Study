@@ -6,11 +6,11 @@
 
 <%
 	
-	if(sessionId.equals("")){
+	if(!sessionLevel.equals("top")){
 %>
 	<script type="text/javascript">
-		alert("로그인 정보가 만료되었습니다. 다시 로그인 하세요");
-		location.href="member_login.jsp";
+		alert("관리자 전용 화면입니다. 다시 로그인 하세요");
+		location.href="../member/member_login.jsp";
 	</script>
 	
 <% 	
@@ -18,7 +18,7 @@
 		String select = "id";
 		String id = request.getParameter("t_no");
 		MemberDao dao = MemberDao.getDao();
-		List<MemberDto> arr = dao.getAdmList(select, id);
+		List<MemberDto> arr = dao.getAdmList(select, id,0,100);	
 		MemberDto dto = arr.get(0);
 %>
 
@@ -30,7 +30,14 @@
 				mem.submit();
 			}
 		}
-
+		
+		function goRevive(){
+			if(confirm("정말 소생시키키시겠습니까?")){
+				mem.method="post";
+				mem.action="db_member_revive.jsp";
+				mem.submit();
+			}
+		}
 	</script>
 
 
@@ -139,7 +146,12 @@
 	<!-- end contents -->
 	
 	<div class="btnArea Acenter pt60 pb100">
+	    <a href="member_list.jsp" class="btn_round btn_large btn_pointColor w180"><b>목록</b></a>
+<%if(dto.getExit_date()==null||dto.getExit_date().equals("")){ %>
         <a href="javascript:goExit()" class="btn_round btn_large btn_pointColor w180"><b>회원 탈퇴</b></a>
+<%}else{%> 
+   		<a href="javascript:goRevive()" class="btn_round btn_large btn_pointColor w180"><b>소생</b></a>
+<%} %>
     </div>
 	
 	
