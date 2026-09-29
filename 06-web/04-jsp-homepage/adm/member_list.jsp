@@ -1,4 +1,3 @@
-<%@page import="java.lang.reflect.Member"%>
 <%@page import="common.CommonUtil"%>
 <%@page import="dao.*,dto.*,java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -6,6 +5,15 @@
 <%@ include file= "../common_header.jsp"%>
 
 <% 
+	if(!sessionLevel.equals("top")){
+%>
+	<script>
+		alert("관리자 화면입니다.")
+		location.href="../index.jsp";
+	</script>
+<%
+	}
+
 	request.setCharacterEncoding("utf-8");
 	MemberDao dao = MemberDao.getDao();
 	String select = request.getParameter("t_select");
@@ -15,7 +23,30 @@
 		search="";
 	}
 	
-	List<MemberDto> arr = dao.getAdmList(select,search);
+	/* paging 설정 start*/
+	int totalCount = dao.getTotalCount(select,search);
+	int list_setup_count = 4;  //한페이지당 출력 행수 
+	int pageNumber_count = 3;  //한페이지당 출력 페이지 갯수
+	String nowPage = request.getParameter("t_clickPage");
+
+	int current_page = 0; // 현재페이지 번호
+	int total_page = 0;    // 전체 페이지 수
+	
+	if(nowPage == null || nowPage.equals("")) current_page = 1; 
+	else current_page = Integer.parseInt(nowPage);
+	
+	total_page = totalCount / list_setup_count;  // 몫 : 2
+	int rest = 	totalCount % list_setup_count;   // 나머지:1
+	if(rest !=0) total_page = total_page + 1;     // 3
+	
+	int start = (current_page -1) * list_setup_count + 1;
+	int end   = current_page * list_setup_count;
+	/* paging 설정 end*/	
+	int order = totalCount - ( start - 1 ); // 
+
+//	List<FaqDto> arr = dao.getNoticeList(select,search,start,end);
+	
+	List<MemberDto> arr = dao.getAdmList(select,search,start,end);
 	
 	
 %>
@@ -29,7 +60,7 @@
 	function goPage(pageNumber){
 		noti.t_clickPage.value=pageNumber;
 		noti.method="post";
-		noti.action="notice_list.jsp";
+		noti.action="member_list.jsp";
 		noti.submit();
 	}
 	
@@ -83,7 +114,7 @@
 	<div class="container">
 	  <div class="search_wrap">
 		<div class="record_group">
-			<p>총 <%=arr.size() %> 인원<span>  </span>건</p>
+			<p>총 <%=totalCount %> 인원<span>  </span>건</p>
 		</div>
 		<div class="search_group">
 			<form name="noti">
@@ -92,6 +123,7 @@
 					<option value="id" <%if(select.equals("id")) out.print("selected");%>>ID</option>
 					<option value="name" <%if(select.equals("name")) out.print("selected");%>>성명</option>
 				</select>
+				
 				<input type="text" name="t_search" class="search_word" value="<%=search%>">
 				<button class="btn_search" onclick="goSearch()"><i class="fa fa-search"></i>
 				<span class="sr-only">검색버튼</span></button>
@@ -120,17 +152,16 @@
 				</tr>
 			</thead>
 			<tbody>
-			<% int numb = arr.size(); %>
 			<% for(MemberDto dto : arr){ %>
 				<tr>
-					<td><%=numb%></td>
+					<td><%=order%></td>
 					<td class="title"><a href="javascript:goView('<%=dto.getId()%>')"><%=dto.getId()%></a></td>
-					<td><a href="javascript:goView('<%=dto.getId()%>')"><%=dto.getName()%></a>					
+					<td><a href="javascript:goView('<%=dto.getId()%>')"><%=dto.getName()%></a></td>				
 					<td><%=dto.getMobile_1()+" - "+dto.getMobile_2()+" - "+dto.getMobile_3()%></td>
 					<td><%=dto.getReg_date()%></td>
 					<td><%=dto.getExit_date()%></td>
 				</tr>
-			<% numb --;}%>
+			<% order --;}%>
 			</tbody>
 		</table>
 		<div class="paging">
@@ -148,6 +179,10 @@
 
 <!-- 			<a href="notice_write.jsp" class="btn_write">삭제</a>
  -->
+ 			<%
+				String pageDisplay= CommonUtil.getPageSetting(current_page, total_page, pageNumber_count);
+				out.print(pageDisplay);
+			%>	
 		</div>
 	  </div>
 	</div>
