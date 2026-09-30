@@ -1,3 +1,92 @@
+/*************faq*****************/
+select exit_date
+from jsl_권구봉_member
+where id = '123';
+
+
+ select *
+ from(   
+    select rownum as rnum, aa.*
+        from (
+            select id,name,password,job,tell_1,tell_2,tell_3,mobile_1,mobile_2,mobile_3,email_1,email_2,to_char(reg_date,'yyyy-MM-dd') as reg_date,to_char(update_date,'yyyy-MM-dd') as update_date,to_char(exit_date, 'yyyy-MM-dd') as exit_date 
+            from jsl_권구봉_member
+            where name like '%%'
+            )aa
+        order by rnum desc
+    )
+where rnum>=1 and rnum<=4;
+
+
+select * from(
+    select rownum as rnum, tbl.* 
+    from (
+        select n.no,n.title,m.name, to_char(n.reg_date,'yy/MM/dd') as reg_date, n.hit
+        from jsl_권구봉_news n,jsl_권구봉_member m
+        where n.reg_id = m.id
+        and n.title like '%%'
+        order by n.no desc
+    ) tbl)
+where rnum >=5 and rnum<=8;
+
+
+
+
+
+select n.no,n.title,n.content,n.attach,
+        m.name as reg_name, n.hit, to_char(n.reg_date,'yyyy-MM-dd') as reg_date
+from jsl_권구봉_notice n, jsl_홍길동_member m
+where n.reg_id = m.id
+and n.no = 'N004';
+
+
+
+select question,answer
+from jsl_권구봉_faq
+where no = 'N008';
+
+commit;
+
+delete from jsl_권구봉_faq
+where no = 'N007';
+
+rollback;
+
+update jsl_권구봉_faq
+set question = 'aa',
+    answer= 'asd',
+    reg_date = '2020-02-03'
+where no = 'N001';
+
+rollback;
+
+select *
+from(
+    select rownum as rnum, a.*
+    from(
+        select no,question,answer,reg_id,to_char(reg_date,'yyyy-MM-dd') as reg_date
+        from jsl_권구봉_faq
+        where question like '%%'
+        order by no desc
+    )a
+)
+where rnum>=5 and rnum<=10;
+
+
+
+select count(*) as count
+from jsl_권구봉_faq
+where question like '%A%';
+
+insert into jsl_권구봉_faq
+(no,question,answer,reg_id,reg_date)
+values
+('N007','b','bb','bbb','2030-02-02');
+
+commit;
+
+
+
+
 /***********notice************/
 --다음글
 select a.nextNo, b.title
