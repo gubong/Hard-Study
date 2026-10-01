@@ -5,6 +5,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import common.CommonUtil;
 import common.DBConnection;
@@ -23,6 +25,109 @@ public class MemberDao {
 	Connection con = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
+	
+	//탈퇴확인
+	public String getExit(String id) {
+		String result = null;
+		String sql = "select exit_date\r\n"
+				+ "from jsl_권구봉_member\r\n"
+				+ "where id = ?";
+		try {
+			con = DBConnection.getConnection();
+			LoggableStatement ps = new LoggableStatement(con, sql);
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				result = rs.getString("exit_date");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FAQ목록오류");
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		return result;
+	}
+	
+	
+	
+	
+	//전체글수
+	public int getTotalCount(String select,String search) {
+		int result = 0;
+		String sql = "select count(*) as count\r\n"
+				+ "from jsl_권구봉_member\r\n"
+				+ "where "+select+" like ?";
+		try {
+			con = DBConnection.getConnection();
+			LoggableStatement ps = new LoggableStatement(con, sql);
+			ps.setString(1, "%"+search+"%");
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FAQ목록오류");
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		return result;
+	}
+
+	
+	
+	
+	
+	public List<MemberDto> getAdmList(String select, String search, int start, int end){
+		List<MemberDto> arr = new ArrayList<>();
+		String sql = " select *\r\n"
+				+ " from(   \r\n"
+				+ "    select rownum as rnum, aa.*\r\n"
+				+ "        from (\r\n"
+				+ "            select id,name,password,job,tell_1,tell_2,tell_3,mobile_1,mobile_2,mobile_3,email_1,email_2,to_char(reg_date,'yyyy-MM-dd') as reg_date,to_char(update_date,'yyyy-MM-dd') as update_date,to_char(exit_date, 'yyyy-MM-dd') as exit_date \r\n"
+				+ "            from jsl_권구봉_member\r\n"
+				+ "            where "+select+" like ?\r\n"
+				+ "            )aa\r\n"
+				+ "        order by rnum desc\r\n"
+				+ "    )\r\n"
+				+ "where rnum>=? and rnum<=?";
+		try {
+			con = DBConnection.getConnection();
+			LogPreparedStatement ps = new LogPreparedStatement(con, sql);
+			ps.setString(1, "%"+search+"%");
+			ps.setInt(2, start);
+			ps.setInt(3, end);
+			rs = ps.executeQuery();	
+			while(rs.next()) {
+				String id = rs.getString("id");
+				String name = rs.getString("name");
+				String job = rs.getString("job");
+				String tell_1 = CommonUtil.getCheckNull(rs.getString("tell_1"));
+				String tell_2 = CommonUtil.getCheckNull(rs.getString("tell_2"));
+				String tell_3 = CommonUtil.getCheckNull(rs.getString("tell_3"));
+				String mobile_1 = rs.getString("mobile_1");
+				String mobile_2 = rs.getString("mobile_2");
+				String mobile_3 = rs.getString("mobile_3");
+				String email_1 = rs.getString("email_1");
+				String email_2 = rs.getString("email_2");
+				String reg_date = rs.getString("reg_date");	
+				String update_date = CommonUtil.getCheckNull(rs.getString("update_date"));			
+				String exit_date = CommonUtil.getCheckNull(rs.getString("exit_date"));			
+				MemberDto dto = new MemberDto(id, name, name, job, tell_1, tell_2, tell_3, mobile_1, mobile_2, mobile_3, email_1, email_2, reg_date, update_date, exit_date);
+				arr.add(dto);
+			}
+		} catch (Exception e) {
+			System.out.println("getMemberInfo오류 : ");
+			e.printStackTrace();
+		} finally{
+			DBConnection.closeDB(con, ps, rs);
+		}
+		return arr;
+	}
+	
+	
+	
 	
 	//비밀번호 변경
 	public int memberPasswordUpdate(String id,String new_password) {
